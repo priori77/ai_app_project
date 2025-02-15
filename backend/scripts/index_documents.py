@@ -1,3 +1,5 @@
+# scripts/index_documents.py
+
 from dotenv import load_dotenv
 load_dotenv()  # .env 파일 로드
 
@@ -31,18 +33,21 @@ except Exception as e:
 def clean_chroma_directory(clean: bool = False):
     """
     기존 ChromaDB 데이터 디렉토리 정리.
-    clean 인자가 True이면 기존 데이터를 백업하고 새로 생성합니다.
-    clean 인자가 False이면 기존 데이터를 그대로 유지합니다.
+    clean 인자가 True이면 기존 데이터를 백업하고 새로 생성.
+    clean 인자가 False이면 기존 데이터를 그대로 유지.
     """
-    # .env에서 설정한 persist 경로를 사용 (여기서는 vector_store)
+    # .env에서 설정한 persist 경로 또는 default '../vector_store'
     chroma_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "vector_store"))
+    logging.info(f"ChromaDB Persist Directory: {chroma_dir}")
+
     if clean and os.path.exists(chroma_dir):
         backup_dir = f"{chroma_dir}_backup_{int(time.time())}"
         logging.info(f"기존 ChromaDB 데이터를 백업합니다: {backup_dir}")
         shutil.move(chroma_dir, backup_dir)
     else:
         logging.info("기존 ChromaDB 데이터를 유지합니다.")
-    logging.info("새로운 ChromaDB 데이터베이스를 생성합니다.")
+
+    logging.info("새로운 ChromaDB 데이터베이스를 생성합니다 (또는 기존에 추가).")
 
 def index_documents(data_directory, clean_data: bool = False):
     """JSON 파일들을 읽어서 ChromaDB에 인덱싱"""
@@ -82,7 +87,7 @@ def index_documents(data_directory, clean_data: bool = False):
                     logging.warning(f"문서 건너뛰기 - id 또는 content 누락 (파일: {os.path.basename(file_path)})")
                     continue
 
-                # keywords가 리스트 형태라면 문자열로 변환
+                # keywords 리스트 -> 문자열 변환
                 if "keywords" in metadata and isinstance(metadata["keywords"], list):
                     keywords_str = ", ".join(str(keyword) for keyword in metadata["keywords"])
                     metadata["keywords"] = keywords_str
@@ -92,7 +97,7 @@ def index_documents(data_directory, clean_data: bool = False):
                 # 파일 출처 정보 추가
                 metadata["source_file"] = os.path.basename(file_path)
                 
-                # 문서 내용에 키워드 강조 병합: "### 키워드: ..."를 문서 상단에 추가
+                # 문서 상단에 키워드를 추가 (검색 힌트)
                 if keywords_str:
                     content = f"### 키워드: {keywords_str}\n\n" + content
 
@@ -106,7 +111,9 @@ def index_documents(data_directory, clean_data: bool = False):
                 logging.error(f"문서 인덱싱 중 오류 발생 (ID: {doc.get('id', 'unknown')}): {e}")
     
     logging.info(f"인덱싱 완료: 총 {total_docs}개 중 {success_docs}개 성공")
-    logging.info(f"저장 위치: {os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'vector_store'))}")
+    # 실제 최종 persist_directory 경로 확인
+    logging.info(f"Vector DB 저장 위치: {os.environ.get('CHROMA_PERSIST_DIRECTORY')}")
+    logging.info("작업을 완료했습니다.")
 
 if __name__ == '__main__':
     current_dir = os.path.dirname(os.path.abspath(__file__))
