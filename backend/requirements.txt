@@ -1,0 +1,56 @@
+# 빌드 도구
+setuptools==75.8.0
+wheel==0.45.1
+
+# Flask 등 웹 서버
+Flask==3.0.2
+Flask-Cors==4.0.0
+Flask-Session==0.5.0
+python-dotenv==1.0.1
+requests==2.31.0
+
+# DB (필요 시)
+SQLAlchemy==2.0.27
+marshmallow==3.21.1
+
+# OpenAI API
+openai==1.13.3
+httpx>=0.24.1  # OpenAI 1.x의 HTTP 클라이언트
+anyio>=4.0.0   # async 지원
+distro>=1.8.0  # 시스템 정보
+typing_extensions>=4.7.1  # 타입 힌트
+
+# 데이터 처리 / 시각화
+numpy==1.23.5
+pandas==2.0.3
+matplotlib==3.7.1
+Pillow==10.0.0
+wordcloud==1.9.3
+plotly==5.13.1
+scikit-learn==1.2.2
+scipy==1.10.1
+
+# 테스트
+pytest==8.0.2
+pytest-cov==4.1.0
+coverage==7.6.10
+
+# 인증 (선택)
+python-jose==3.3.0
+
+# 텍스트 처리
+nltk==3.6.3
+langdetect==1.0.9
+konlpy==0.5.2
+tweepy==3.10.0
+regex==2024.11.6
+
+# 유틸리티
+colorama==0.4.6
+python-json-logger==3.2.1
+structlog==24.1.0
+tqdm==4.67.1
+
+# 추가된 패키지
+packaging==24.2
+passlib==1.7.4
