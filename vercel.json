@@ -20,6 +20,11 @@
         "src": "/(.*)",
         "dest": "frontend/package.json"
       }
-    ]
+    ],
+    "functions": {
+      "api/**/index.py": {
+        "runtime": "python3.11"
+      }
+    }
   }
   
