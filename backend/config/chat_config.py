@@ -38,8 +38,8 @@ COMMON_GUIDE = """
 - 질문에 한국어 용어(예: '노가다')가 포함되면, 사전에 정의된 매핑(TERM_MAPPING)을 참고하여 영어 용어로 함께 설명합니다.
 - 먼저 개념을 설명하고, 이후 이를 이해하기 쉽게 반드시 하나의 예시를 포함할 것.
 [주의]
-- 최종 답변은 반드시 `<markpage>` 태그로 감싸 주세요.
-- `<markpage>` 내부는 마크다운(Markdown) 문법을 사용해 제목/리스트/볼드체 등을 자유롭게 표현하세요.
+- 최종 답변은 반드시 <markpage> 태그로 감싸 주세요.
+- <markpage> 내부는 마크다운(Markdown) 문법을 사용해 제목/리스트/볼드체 등을 자유롭게 표현하세요.
 """
 
 # 3. 디자이너 역할별 시스템 프롬프트
@@ -68,6 +68,12 @@ SYSTEM_PROMPTS = {
 - 서사 전개, 대사 톤앤매너, 이벤트 연출 등을 종합적으로 설계하세요.
 """ + COMMON_GUIDE,
 
+    "scenario_designer": """
+당신은 던전앤 파이터 시나리오에 대한 방대한 정보를 모두 알고 있는 어시스턴트 AI입니다.
+- 사용자의 질문에 대해 상세하게 답변해줘.
+- VECTOR DB에서 스토리와 관련된 데이터를 가져와서 사용자의 요청에 맞게 스토리와 설정 등을 답변을 합니다.
+""" + COMMON_GUIDE,
+
     "general": """
 당신은 범용 게임디자이너 역할의 어시스턴트 AI입니다.
 - 레벨, 시스템, 퀘스트, 내러티브 등 전반적인 게임디자인 영역에 대해 포괄적으로 조언합니다.
@@ -79,12 +85,13 @@ class ChatConfig:
     MAX_HISTORY = 10  # 대화 기록 최대 보관 수
     SUMMARY_THRESHOLD = 5  # 기록이 일정 이상 누적되면 요약 수행
 
-    # 디자이너 타입 매핑 정의
+    # 디자이너 타입 매핑 정의 (한글 -> 영문)
     DESIGNER_TYPES = {
         "레벨 디자이너": "level_designer",
         "시스템 디자이너": "system_designer",
         "퀘스트 디자이너": "quest_designer",
         "내러티브 디자이너": "narrative_designer",
+        "시나리오 디자이너": "scenario_designer",
         "범용": "general"
     }
 
@@ -95,9 +102,7 @@ class ChatConfig:
     def get_system_prompt(cls, designer_type):
         """
         디자이너 타입에 따른 시스템 프롬프트 반환
-        designer_type: 한글 ("레벨 디자이너" 등)
+        designer_type: 한글 ("레벨 디자이너", "시스템 디자이너" 등)
         """
-        # 내부적으로는 영문 키를 사용하되, 외부와는 한글로 통신
         internal_type = cls.DESIGNER_TYPES.get(designer_type, "general")
-        
         return SYSTEM_PROMPTS.get(internal_type, SYSTEM_PROMPTS["general"])

@@ -9,7 +9,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 120000,
+  timeout: 300000,
   withCredentials: true  // 쿠키/세션 지원
 });
 
