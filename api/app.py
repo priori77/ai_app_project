@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_session import Session
-from routes import scenario_bp, review_bp, chatbot_bp
+from backend.routes import scenario_bp, review_bp, chatbot_bp
 import os
 from datetime import timedelta
 
