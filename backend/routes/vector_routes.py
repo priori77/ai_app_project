@@ -20,7 +20,7 @@ def add_document():
 def query_documents():
     """문서 검색 API : query 파라미터를 사용하여 상위 K개 결과 검색. 예: /query?query=...&top_k=3"""
     query = request.args.get("query")
-    top_k = int(request.args.get("top_k", 3))
+    top_k = int(request.args.get("top_k", 5))
     try:
         results = vector_service.query(query, top_k)
         return jsonify({"results": results})

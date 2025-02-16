@@ -54,7 +54,7 @@ def scenario_chat():
             f"스토리/설정 관련 질문:\n\n"
             f"{question}\n\n"
             f"검색된 문맥:\n{context_text}\n\n"
-            f"스토리나 설정 충돌을 점검하고, 개선 방안을 제시해 주세요."
+            f"사용자의 질문 혹은 요청사항에 대해 상세하게 답변해줘."
         )
 
         # 3. ChatService 호출: 시나리오 디자이너 모드
