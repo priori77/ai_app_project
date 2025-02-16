@@ -43,7 +43,3 @@ def create_app():
 
 # Vercel 배포를 위해 글로벌 변수로 Flask 앱 인스턴스 생성
 app = create_app()
-
-# 아래 코드는 로컬 개발을 위한 부분입니다.
-if __name__ == '__main__':
-    app.run(debug=True)
