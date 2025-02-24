@@ -44,7 +44,7 @@ class DesignerConfigs:
     SCENARIO_DESIGNER = {
         "model": "o3-mini",           # 원하는 모델 이름
         "reasoning_effort": "high",   # 시나리오 검토에 높은 reasoning 사용
-        "max_completion_tokens": 4000
+        "max_completion_tokens": 7000
     }
     GENERAL = {
         "model": "o3-mini",
@@ -83,4 +83,4 @@ class ReviewAnalysisConfig(BaseConfig):
     """
     MODEL = "o3-mini"
     REASONING_EFFORT = "high"
-    MAX_COMPLETION_TOKENS = 4000
+    MAX_COMPLETION_TOKENS = 8000

@@ -4,7 +4,6 @@ import Navigation from './Navigation';
 import ScenarioTab from './ScenarioTab';
 import ReviewTab from './ReviewTab';
 import ChatbotTab from './ChatbotTab';
-import OtherTab from './OtherTab';
 
 function Layout() {
   const [currentTab, setCurrentTab] = useState('scenario');
@@ -28,8 +27,6 @@ function Layout() {
         />;
       case 'chatbot':
         return <ChatbotTab />;
-      case 'other':
-        return <OtherTab />;
       default:
         return <ScenarioTab />;
     }

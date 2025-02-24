@@ -1,3 +1,4 @@
+import React from 'react';
 import { AppBar, Tabs, Tab, Toolbar, Typography } from '@mui/material';
 
 function Navigation({ currentTab, onTabChange }) {
@@ -9,17 +10,22 @@ function Navigation({ currentTab, onTabChange }) {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          게임 디자인 어시스턴트
+          AI WEB APP PROJECT
         </Typography>
       </Toolbar>
-      <Tabs value={currentTab} onChange={handleChange} centered>
+      <Tabs
+        value={currentTab}
+        onChange={handleChange}
+        textColor="inherit"
+        indicatorColor="secondary"
+        centered
+      >
         <Tab label="시나리오 관리" value="scenario" />
         <Tab label="리뷰 분석" value="review" />
         <Tab label="디자인 챗봇" value="chatbot" />
-        <Tab label="기타" value="other" />
       </Tabs>
     </AppBar>
   );
 }
 
-export default Navigation; 
+export default Navigation;
